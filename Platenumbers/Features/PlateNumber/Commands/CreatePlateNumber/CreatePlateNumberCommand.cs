@@ -1,14 +1,13 @@
-﻿using Platenumbers.Domain.Common;
+﻿using MediatR;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Platenumbers.Domain
+namespace Platenumbers.Application.Features.PlateNumber.Commands.CreatePlateNumber
 {
-    public class PlateNumber : BaseEntity
+    public class CreatePlateNumberCommand : IRequest<int>
     {
         public string Number { get; set; } = string.Empty;
         public int ReserveNumberId { get; set; }
