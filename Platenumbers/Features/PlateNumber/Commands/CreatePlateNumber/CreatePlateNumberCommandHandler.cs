@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Platenumbers.Application.Contracts.Logging;
 using Platenumbers.Application.Contracts.Persistance;
 using Platenumbers.Application.Exceptions;
 using System;
@@ -14,11 +15,15 @@ namespace Platenumbers.Application.Features.PlateNumber.Commands.CreatePlateNumb
     {
         private readonly IMapper _mapper;
         private readonly IPlateNumberRepository _plateNumberRepository;
+        private readonly IAppLogger<CreatePlateNumberCommandHandler> _logger;
 
-        public CreatePlateNumberCommandHandler( IMapper mapper, IPlateNumberRepository plateNumberRepository)
+        public CreatePlateNumberCommandHandler( IMapper mapper, 
+            IPlateNumberRepository plateNumberRepository,
+            IAppLogger<CreatePlateNumberCommandHandler> logger)
         {
             this._mapper = mapper;
             this._plateNumberRepository = plateNumberRepository;
+            this._logger = logger;
         }
         public async Task<int> Handle(CreatePlateNumberCommand request, CancellationToken cancellationToken)
         {
@@ -28,6 +33,7 @@ namespace Platenumbers.Application.Features.PlateNumber.Commands.CreatePlateNumb
 
             if (validationResult.Errors.Any())
             {
+                _logger.LogWarning($"ნომერი არასწორი ფორმატისაა. {0} - {1}", nameof(PlateNumber), request.Id);
                 throw new BadRequestException("არასწორი ნომერი", validationResult);
             }
 

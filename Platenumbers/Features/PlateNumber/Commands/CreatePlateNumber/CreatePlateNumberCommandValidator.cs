@@ -15,6 +15,10 @@ namespace Platenumbers.Application.Features.PlateNumber.Commands.CreatePlateNumb
 
         public CreatePlateNumberCommandValidator(IPlateNumberRepository plateNumberRepository)
         {
+            RuleFor(p => p.Id)
+                .NotNull()
+                .MustAsync(PlateNumberMustExist);
+            
             RuleFor(p => p.Number)
                 .NotEmpty().WithMessage("ნომერი არ შეიძლება იყოს ცარიელი")
                 .NotNull()
@@ -26,6 +30,12 @@ namespace Platenumbers.Application.Features.PlateNumber.Commands.CreatePlateNumb
 
 
             this._plateNumberRepository = plateNumberRepository;
+        }
+
+        private async Task<bool> PlateNumberMustExist(int id, CancellationToken token)
+        {
+            var plateNumber = await _plateNumberRepository.GetByIdAsync(id);
+            return plateNumber != null;
         }
 
         private Task<bool> PlateNumberUnique(CreatePlateNumberCommand command, CancellationToken token)

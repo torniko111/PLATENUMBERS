@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Platenumbers.Application.Contracts.Logging;
 using Platenumbers.Application.Contracts.Persistance;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,15 @@ namespace Platenumbers.Application.Features.PlateNumber.Queries.GetAllPlateNumbe
     {
         private readonly IMapper _mapper;
         private readonly IPlateNumberRepository _plateNumberRepository;
+        private readonly IAppLogger<GetPlateNumbersQueryHandler> _logger;
 
-        public GetPlateNumbersQueryHandler(IMapper mapper, IPlateNumberRepository plateNumberRepository)
+        public GetPlateNumbersQueryHandler(IMapper mapper, 
+            IPlateNumberRepository plateNumberRepository,
+            IAppLogger<GetPlateNumbersQueryHandler> logger)
         {
             this._mapper = mapper;
             this._plateNumberRepository = plateNumberRepository;
+            this._logger = logger;
         }
 
         public async Task<List<PlateNumberDto>> Handle(GetPlateNumbersQuery request, CancellationToken cancellationToken)
@@ -29,6 +34,7 @@ namespace Platenumbers.Application.Features.PlateNumber.Queries.GetAllPlateNumbe
             var data = _mapper.Map<List<PlateNumberDto>>(PlateNumbers);
 
             // return list of DTO object
+            _logger.LogInformation("ნომრები წამოვიდა წარმატებულად");
             return data;
         }
     }
