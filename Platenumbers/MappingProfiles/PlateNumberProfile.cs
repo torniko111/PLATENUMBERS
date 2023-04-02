@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Platenumbers.Application.Features.PlateNumber.Commands.CreatePlateNumber;
+using Platenumbers.Application.Features.PlateNumber.Commands.UpdatePlateNumber;
 using Platenumbers.Application.Features.PlateNumber.Queries.GetAllPlateNumbers;
 using Platenumbers.Application.Features.PlateNumber.Queries.GetPlateNumberDetails;
 using Platenumbers.Domain;
@@ -16,6 +18,8 @@ namespace Platenumbers.Application.MappingProfiles
         {
             CreateMap<PlateNumberDto, PlateNumber>().ReverseMap();
             CreateMap<PlateNumber, PlateNumberDetailsDto>();
+            CreateMap<CreatePlateNumberCommand, PlateNumber>();
+            CreateMap<UpdatePlateNumberCommand, PlateNumber>();
         }
     }
 }

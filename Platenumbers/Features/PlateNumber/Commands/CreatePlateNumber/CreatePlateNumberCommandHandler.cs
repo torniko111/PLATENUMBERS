@@ -31,10 +31,17 @@ namespace Platenumbers.Application.Features.PlateNumber.Commands.CreatePlateNumb
             var validator = new CreatePlateNumberCommandValidator(_plateNumberRepository);
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
+            string errorTXT = string.Empty;
+
+            foreach (var item in validationResult.Errors)
+            {
+                errorTXT = item.ErrorMessage;
+            }
+
             if (validationResult.Errors.Any())
             {
                 _logger.LogWarning($"ნომერი არასწორი ფორმატისაა. {0} - {1}", nameof(PlateNumber), request.Id);
-                throw new BadRequestException("არასწორი ნომერი", validationResult);
+                throw new BadRequestException(errorTXT, validationResult);
             }
 
             //convert to domain entity object

@@ -19,7 +19,7 @@ namespace PlateNumbers.Persistance.Repositories
 
         public async Task<bool> IsPlateNumberUnique(string number)
         {
-            return await _context.plateNumbers.AnyAsync(q => q.Number == number);
+            return await _context.plateNumbers.AnyAsync(q => q.Number == number) == false;
         }
     }
 }
