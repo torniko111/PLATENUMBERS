@@ -14,8 +14,7 @@ namespace PlateNumbers.Persistence.Configurations
         public void Configure(EntityTypeBuilder<PlateNumber> builder)
         {
             builder.Property(q => q.Number)
-                .IsRequired();
-              
+                .IsRequired();            
         }
     }
 }
