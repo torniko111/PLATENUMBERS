@@ -12,11 +12,7 @@ namespace Platenumbers.Domain
     public class PlateNumber : BaseEntity
     {
         public string Number { get; set; } = string.Empty;
-
-        [JsonIgnore]
         public int? ReserveNumberId { get; set; }
-
-        [JsonIgnore]
-        public ReserveNumber? ReserveNumber { get; set; }
+        public ReserveNumber ReserveNumber { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PlateNumbers.Persistence.DatabaseContext;
 
@@ -11,9 +12,11 @@ using PlateNumbers.Persistence.DatabaseContext;
 namespace Platenumbers.Persistance.Migrations
 {
     [DbContext(typeof(PlateNumberContext))]
-    partial class PlateNumberContextModelSnapshot : ModelSnapshot
+    [Migration("20230402222051_reconfigure_reservenumber")]
+    partial class reconfigure_reservenumber
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +36,7 @@ namespace Platenumbers.Persistance.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateUpdate")
+                    b.Property<DateTime>("DateEnd")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Number")
@@ -61,11 +64,11 @@ namespace Platenumbers.Persistance.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateUpdate")
+                    b.Property<DateTime>("DateEnd")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ExpireDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

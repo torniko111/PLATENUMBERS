@@ -10,6 +10,6 @@ namespace Platenumbers.Domain.Common
     {
         public int Id { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.Now;
-        public DateTime DateEnd { get; set; }
+        public DateTime DateUpdate { get; set; }
     }
 }
