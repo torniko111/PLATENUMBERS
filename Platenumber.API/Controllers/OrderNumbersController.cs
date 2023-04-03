@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Platenumbers.Application.Features.PlateNumber.Commands.CreatePlateNumber;
+using Platenumbers.Application.Features.PlateNumber.Commands.CreateOrderNumber;
 using Platenumbers.Application.Features.PlateNumber.Commands.CreateReserveNumber;
 using Platenumbers.Application.Features.PlateNumber.Commands.DeletePlateNumber;
 
@@ -10,12 +10,11 @@ namespace Platenumbers.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ReserveNumberController : ControllerBase
+    public class OrderNumbersController : ControllerBase
     {
-
         private readonly IMediator _mediator;
 
-        public ReserveNumberController(IMediator mediator)
+        public OrderNumbersController(IMediator mediator)
         {
             this._mediator = mediator;
         }
@@ -38,12 +37,12 @@ namespace Platenumbers.API.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] List<string> numbers)
         {
-            var reservedNumbers = new CreateReserveNumberCommand();
-            reservedNumbers.Numbers = numbers;
-            var response = await _mediator.Send(reservedNumbers);
+            var orderedNumbers = new CreateOrderNumberCommand();
+            orderedNumbers.Numbers = numbers;
+            var response = await _mediator.Send(orderedNumbers);
             return CreatedAtAction(nameof(Get), new { id = response });
 
-            }
+        }
 
         // PUT api/<ReserveNumberController>/5
         [HttpPut("{id}")]

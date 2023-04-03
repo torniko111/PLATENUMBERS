@@ -10,6 +10,8 @@ namespace Platenumbers.Application.Features.PlateNumber.Queries.GetAllPlateNumbe
     {
         public int Id { get; set; }
         public string Number { get; set; } = string.Empty;
-        public int ReserveNumberId { get; set; }
+        public int? ReserveNumberId { get; set; }
+        public int? OrderNumberId { get; set; }
+
     }
 }

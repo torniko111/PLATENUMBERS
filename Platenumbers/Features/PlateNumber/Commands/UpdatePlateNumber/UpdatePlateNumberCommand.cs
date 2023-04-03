@@ -9,8 +9,8 @@ namespace Platenumbers.Application.Features.PlateNumber.Commands.UpdatePlateNumb
 {
     public class UpdatePlateNumberCommand : IRequest<Unit>
     {
+        public int Id { get; set; }
         public string Number { get; set; } = string.Empty;
-        public int ReserveNumberId { get; set; }
-        public ReserveNumber? ReserveNumber { get; set; }
+     
     }
 }

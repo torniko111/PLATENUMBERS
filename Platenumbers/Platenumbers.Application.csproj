@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Platenumbers.Domain\Platenumbers.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\PlateNumber\Commands\DeleteOrderNumber\" />
+  </ItemGroup>
+
 </Project>

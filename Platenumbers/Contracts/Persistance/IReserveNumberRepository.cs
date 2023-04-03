@@ -1,4 +1,6 @@
-﻿namespace Platenumbers.Application.Contracts.Persistance
+﻿using Platenumbers.Application.Features.PlateNumber.Commands.DeleteReserveNumber;
+
+namespace Platenumbers.Application.Contracts.Persistance
 {
     public interface IReserveNumberRepository : IGenericRepository<ReserveNumber>
     {

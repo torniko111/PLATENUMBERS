@@ -14,5 +14,9 @@ namespace Platenumbers.Domain
         public string Number { get; set; } = string.Empty;
         public int? ReserveNumberId { get; set; }
         public ReserveNumber ReserveNumber { get; set; }
+
+        public int? OrderNumberId { get; set; }
+
+        public OrderNumber OrderNumber { get; set; }
     }
 }

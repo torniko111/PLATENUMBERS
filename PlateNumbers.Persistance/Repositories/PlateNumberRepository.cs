@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PlateNumbers.Persistance.Repositories
 {
@@ -21,5 +22,43 @@ namespace PlateNumbers.Persistance.Repositories
         {
             return await _context.plateNumbers.AnyAsync(q => q.Number == number) == false;
         }
+
+        public override async Task DeleteAsync(PlateNumber entity)
+        {
+            var toDelete =  _context.plateNumbers.FirstOrDefault(q => q.Number == entity.Number);
+
+            if (toDelete == null)
+                throw new Exception("ასეთი ნომერი არ არსებობს");
+
+            if (toDelete.ReserveNumberId != null)
+            {
+                throw new Exception("ნომერი დაჯავშნილია, მისი წაშლა შეუძლებელია");
+            }
+            if (toDelete.OrderNumberId != null)
+            {
+                throw new Exception("ნომერი შეკვეთილია, მისი წაშლა შეუძლებელია");
+            }
+
+
+            _context.Remove(entity);
+            await _context.SaveChangesAsync();
+        }
+
+
+        public override async Task UpdateAsync(PlateNumber entity)
+        {
+            var toUp = _context.plateNumbers.FirstOrDefault(x => x.Id == entity.Id);
+            if (toUp == null)
+                throw new Exception("ასეთი ნომერი არ არსებობს");
+
+            if (toUp.ReserveNumberId != null)
+            {
+                throw new Exception("ნომერი დაჯავშნილია, მისი შეცვლა შეუძლებელია");
+            }
+
+            _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

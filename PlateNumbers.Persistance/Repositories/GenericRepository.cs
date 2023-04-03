@@ -5,6 +5,7 @@ using PlateNumbers.Persistence.DatabaseContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -33,12 +34,12 @@ namespace PlateNumbers.Persistence.Repositories
 
         public virtual async Task<IReadOnlyList<T>> GetAsync()
         {
-            return await _context.Set<T>().AsNoTracking().ToListAsync();
+            return await _context.Set<T>().ToListAsync();
         }
 
         public virtual async Task<T> GetByIdAsync(int id)
         {
-            return await _context.Set<T>().AsNoTracking().FirstOrDefaultAsync(q=>q.Id == id);
+            return await _context.Set<T>().FirstOrDefaultAsync(q => q.Id == id);
         }
 
         public virtual async Task UpdateAsync(T entity)

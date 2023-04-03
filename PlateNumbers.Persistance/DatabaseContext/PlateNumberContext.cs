@@ -18,6 +18,7 @@ namespace PlateNumbers.Persistence.DatabaseContext
 
         public DbSet<PlateNumber> plateNumbers { get; set; }
         public DbSet<ReserveNumber> reserveNumbers { get; set; }
+        public DbSet<OrderNumber> orderNumbers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
