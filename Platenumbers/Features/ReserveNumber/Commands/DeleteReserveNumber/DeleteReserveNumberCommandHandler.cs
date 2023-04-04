@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Platenumbers.Application.Features.PlateNumber.Commands.DeleteReserveNumber
+namespace Platenumbers.Application.Features.ReserveNumber.Commands.DeleteReserveNumber
 {
     public class DeleteReserveNumberCommandHandler : IRequestHandler<DeleteReserveNumberCommand, Unit>
 
@@ -22,9 +22,9 @@ namespace Platenumbers.Application.Features.PlateNumber.Commands.DeleteReserveNu
             IReserveNumberRepository reserveNumberRepository,
             IAppLogger<DeleteReserveNumberCommandHandler> logger)
         {
-            this._mapper = mapper;
-            this._reserveNumberRepository = reserveNumberRepository;
-            this._logger = logger;
+            _mapper = mapper;
+            _reserveNumberRepository = reserveNumberRepository;
+            _logger = logger;
         }
         public async Task<Unit> Handle(DeleteReserveNumberCommand request, CancellationToken cancellationToken)
         {

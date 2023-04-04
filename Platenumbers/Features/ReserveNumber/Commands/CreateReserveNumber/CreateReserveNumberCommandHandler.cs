@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Platenumbers.Application.Features.PlateNumber.Commands.CreateReserveNumber
+namespace Platenumbers.Application.Features.ReserveNumber.Commands.CreateReserveNumber
 {
     public class CreateReserveNumberCommandHandler : IRequestHandler<CreateReserveNumberCommand, int>
 
@@ -24,9 +24,9 @@ namespace Platenumbers.Application.Features.PlateNumber.Commands.CreateReserveNu
             IReserveNumberRepository reserveNumberRepository,
             IAppLogger<CreateReserveNumberCommandHandler> logger)
         {
-            this._mapper = mapper;
-            this._reserveNumberRepository = reserveNumberRepository;
-            this._logger = logger;
+            _mapper = mapper;
+            _reserveNumberRepository = reserveNumberRepository;
+            _logger = logger;
         }
         public async Task<int> Handle(CreateReserveNumberCommand request, CancellationToken cancellationToken)
         {

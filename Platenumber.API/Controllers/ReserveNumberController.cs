@@ -1,8 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Platenumbers.Application.Features.PlateNumber.Commands.CreatePlateNumber;
-using Platenumbers.Application.Features.PlateNumber.Commands.CreateReserveNumber;
+using Platenumbers.Application.Features.ReserveNumber.Commands.CreateReserveNumber;
 using Platenumbers.Application.Features.PlateNumber.Commands.DeletePlateNumber;
+using Platenumbers.Application.Features.ReserveNumber.Commands.DeleteReserveNumber;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -56,7 +57,7 @@ namespace Platenumbers.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var command = new DeletePlateNumberCommand { Id = id };
+            var command = new DeleteReserveNumberCommand { Id = id };
             await _mediator.Send(command);
             return NoContent();
         }

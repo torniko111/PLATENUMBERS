@@ -4,6 +4,7 @@ using Platenumbers.Application.Features.PlateNumber.Commands.CreatePlateNumber;
 using Platenumbers.Application.Features.PlateNumber.Commands.DeletePlateNumber;
 using Platenumbers.Application.Features.PlateNumber.Commands.UpdatePlateNumber;
 using Platenumbers.Application.Features.PlateNumber.Queries.GetAllPlateNumbers;
+using Platenumbers.Application.Features.PlateNumber.Queries.PlateNumbersPaginationOrdering;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,6 +28,15 @@ namespace Platenumbers.API.Controllers
             var plateNumbers = await _mediator.Send(new GetPlateNumbersQuery());
             return plateNumbers;
         }
+
+        // GET: api/<PlateNumbersController>6
+        [HttpGet("{Pages}, {NumberOfpage}")]
+        public async Task<List<PlateNumbersPaginationOrderingDto>> Get(int Pages, int NumberOfpage)
+        {
+            var plateNumbers = await _mediator.Send(new GetPlateNumbersPaginationOrderingQuery(Pages, NumberOfpage));
+            return plateNumbers;
+        }
+
 
         // GET api/<PlateNumbersController>/5
         [HttpGet("{id}")]

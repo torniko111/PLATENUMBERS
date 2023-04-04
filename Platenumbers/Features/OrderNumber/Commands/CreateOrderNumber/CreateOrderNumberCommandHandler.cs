@@ -3,7 +3,7 @@ using MediatR;
 using Platenumbers.Application.Contracts.Logging;
 using Platenumbers.Application.Contracts.Persistance;
 using Platenumbers.Application.Features.PlateNumber.Commands.CreatePlateNumber;
-using Platenumbers.Application.Features.PlateNumber.Commands.CreateReserveNumber;
+using Platenumbers.Application.Features.ReserveNumber.Commands.CreateReserveNumber;
 using System;
 using System.Collections.Generic;
 using System.Linq;

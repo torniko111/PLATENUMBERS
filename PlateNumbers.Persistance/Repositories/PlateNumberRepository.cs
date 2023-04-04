@@ -60,5 +60,19 @@ namespace PlateNumbers.Persistance.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<IReadOnlyList<PlateNumber>> PaginationOrdering(int Count, int NumberOfpage)
+        {
+
+            if (Count != null && NumberOfpage !=null)
+            {
+                int NumberPerpage = 0;
+                int Page = 0;
+             
+
+                return await _context.Set<PlateNumber>().Skip(Count* NumberOfpage).Take(Count).ToListAsync();
+            }
+
+            return await _context.Set<PlateNumber>().ToListAsync();
+        }
     }
 }

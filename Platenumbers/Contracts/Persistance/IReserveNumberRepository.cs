@@ -1,4 +1,4 @@
-﻿using Platenumbers.Application.Features.PlateNumber.Commands.DeleteReserveNumber;
+﻿using Platenumbers.Application.Features.ReserveNumber.Commands.DeleteReserveNumber;
 
 namespace Platenumbers.Application.Contracts.Persistance
 {

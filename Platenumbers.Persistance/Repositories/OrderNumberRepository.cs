@@ -17,8 +17,6 @@ namespace Platenumbers.Persistance.Repositories
         {
         }
 
-
-
         public async Task<int> CreateAsync(List<string> numbers)
         {
             var plateNumbers = await _context.plateNumbers.Where(q => numbers.Contains(q.Number)).ToListAsync();

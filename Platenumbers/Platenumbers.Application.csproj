@@ -19,7 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\PlateNumber\Commands\DeleteOrderNumber\" />
+    <Folder Include="Features\OrderNumber\Queries\" />
+    <Folder Include="Features\ReserveNumber\Queries\" />
   </ItemGroup>
 
 </Project>
