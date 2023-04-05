@@ -13,22 +13,22 @@ namespace Platenumbers.Application.Features.PlateNumber.Queries.GetAllPlateNumbe
     public class GetPlateNumbersQueryHandler : IRequestHandler<GetPlateNumbersQuery, List<PlateNumberDto>>
     {
         private readonly IMapper _mapper;
-        private readonly IPlateNumberRepository _plateNumberRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IAppLogger<GetPlateNumbersQueryHandler> _logger;
 
         public GetPlateNumbersQueryHandler(IMapper mapper, 
-            IPlateNumberRepository plateNumberRepository,
+            IUnitOfWork unitOfWork,
             IAppLogger<GetPlateNumbersQueryHandler> logger)
         {
             this._mapper = mapper;
-            this._plateNumberRepository = plateNumberRepository;
+            this._unitOfWork = unitOfWork;
             this._logger = logger;
         }
 
         public async Task<List<PlateNumberDto>> Handle(GetPlateNumbersQuery request, CancellationToken cancellationToken)
         {
             // Query the database
-            var PlateNumbers = await _plateNumberRepository.GetAsync();
+            var PlateNumbers = await _unitOfWork.Numbers.GetAsync();
 
             // convert data objects to DTO objects
             var data = _mapper.Map<List<PlateNumberDto>>(PlateNumbers);

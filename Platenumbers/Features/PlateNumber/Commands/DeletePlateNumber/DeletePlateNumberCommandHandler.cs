@@ -12,16 +12,16 @@ namespace Platenumbers.Application.Features.PlateNumber.Commands.DeletePlateNumb
 {
     public class DeletePlateNumberCommandHandler : IRequestHandler<DeletePlateNumberCommand, Unit>
     {
-        private readonly IPlateNumberRepository _plateNumberRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeletePlateNumberCommandHandler(IMapper mapper, IPlateNumberRepository plateNumberRepository)
+        public DeletePlateNumberCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
         {
-            this._plateNumberRepository = plateNumberRepository;
+            this._unitOfWork = unitOfWork;
         }
         public async Task<Unit> Handle(DeletePlateNumberCommand request, CancellationToken cancellationToken)
         {
             //Retrieve
-            var plateNumberToDelete = await _plateNumberRepository.GetByIdAsync(request.Id);
+            var plateNumberToDelete = await _unitOfWork.Numbers.GetByIdAsync(request.Id);
 
             //verify
             if(plateNumberToDelete == null)
@@ -30,7 +30,7 @@ namespace Platenumbers.Application.Features.PlateNumber.Commands.DeletePlateNumb
             }
 
             //delete from db
-            await _plateNumberRepository.DeleteAsync(plateNumberToDelete);
+            await _unitOfWork.Numbers.DeleteAsync(plateNumberToDelete);
 
             //return 
             return Unit.Value;

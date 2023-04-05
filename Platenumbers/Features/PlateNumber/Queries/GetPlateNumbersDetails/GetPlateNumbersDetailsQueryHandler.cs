@@ -14,19 +14,19 @@ namespace Platenumbers.Application.Features.PlateNumber.Queries.GetPlateNumberDe
     public class GetPlateNumbersDetailsQueryHandler : IRequestHandler<GetPlateNumbersDetailsQuery, PlateNumberDetailsDto>
     {
         private readonly IMapper _mapper;
-        private readonly IPlateNumberRepository _plateNumberRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetPlateNumbersDetailsQueryHandler(IMapper mapper, IPlateNumberRepository plateNumberRepository)
+        public GetPlateNumbersDetailsQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
         {
             this._mapper = mapper;
-            this._plateNumberRepository = plateNumberRepository;
+            this._unitOfWork = unitOfWork;
         }
 
         public async Task<PlateNumberDetailsDto> Handle(GetPlateNumbersDetailsQuery request, CancellationToken cancellationToken)
         {
 
             // Query the database
-            var PlateNumber = await _plateNumberRepository.GetByIdAsync(request.Id);
+            var PlateNumber = await _unitOfWork.Numbers.GetByIdAsync(request.Id);
 
             //verify
             if (PlateNumber == null)

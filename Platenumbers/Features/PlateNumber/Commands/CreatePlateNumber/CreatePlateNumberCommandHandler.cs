@@ -14,21 +14,21 @@ namespace Platenumbers.Application.Features.PlateNumber.Commands.CreatePlateNumb
     public class CreatePlateNumberCommandHandler : IRequestHandler<CreatePlateNumberCommand, int>
     {
         private readonly IMapper _mapper;
-        private readonly IPlateNumberRepository _plateNumberRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IAppLogger<CreatePlateNumberCommandHandler> _logger;
 
-        public CreatePlateNumberCommandHandler( IMapper mapper, 
-            IPlateNumberRepository plateNumberRepository,
+        public CreatePlateNumberCommandHandler( IMapper mapper,
+            IUnitOfWork unitOfWork,
             IAppLogger<CreatePlateNumberCommandHandler> logger)
         {
             this._mapper = mapper;
-            this._plateNumberRepository = plateNumberRepository;
+            this._unitOfWork = unitOfWork;
             this._logger = logger;
         }
         public async Task<int> Handle(CreatePlateNumberCommand request, CancellationToken cancellationToken)
         {
             //Validate
-            var validator = new CreatePlateNumberCommandValidator(_plateNumberRepository);
+            var validator = new CreatePlateNumberCommandValidator(_unitOfWork);
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
             string errorTXT = string.Empty;
@@ -48,7 +48,7 @@ namespace Platenumbers.Application.Features.PlateNumber.Commands.CreatePlateNumb
             var plateNumberToCreate = _mapper.Map<Domain.PlateNumber>(request);
 
             // add to database
-            await _plateNumberRepository.CreateAsync(plateNumberToCreate);
+            await _unitOfWork.Numbers.CreateAsync(plateNumberToCreate);
 
             //return record id
             return plateNumberToCreate.Id;

@@ -14,19 +14,19 @@ namespace Platenumbers.Application.Features.PlateNumber.Queries.PlateNumbersPagi
     public class GetPlateNumbersPaginationOrderingQueryHandler : IRequestHandler<GetPlateNumbersPaginationOrderingQuery, List<PlateNumbersPaginationOrderingDto>>
     {
         private readonly IMapper _mapper;
-        private readonly IPlateNumberRepository _plateNumberRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetPlateNumbersPaginationOrderingQueryHandler(IMapper mapper, IPlateNumberRepository plateNumberRepository)
+        public GetPlateNumbersPaginationOrderingQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
         {
             this._mapper = mapper;
-            this._plateNumberRepository = plateNumberRepository;
+            this._unitOfWork = unitOfWork;
         }
 
         public async Task<List<PlateNumbersPaginationOrderingDto>> Handle(GetPlateNumbersPaginationOrderingQuery request, CancellationToken cancellationToken)
         {
 
             // Query the database
-            var PlateNumber = await _plateNumberRepository.PaginationOrdering(request.numberPerPage, request.PageNumberOf) ;
+            var PlateNumber = await _unitOfWork.Numbers.PaginationOrdering(request.numberPerPage, request.PageNumberOf) ;
 
             //verify
             if (PlateNumber == null)

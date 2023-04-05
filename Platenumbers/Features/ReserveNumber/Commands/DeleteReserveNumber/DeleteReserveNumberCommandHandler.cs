@@ -15,21 +15,21 @@ namespace Platenumbers.Application.Features.ReserveNumber.Commands.DeleteReserve
 
     {
         private readonly IMapper _mapper;
-        private readonly IReserveNumberRepository _reserveNumberRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IAppLogger<DeleteReserveNumberCommandHandler> _logger;
 
         public DeleteReserveNumberCommandHandler(IMapper mapper,
-            IReserveNumberRepository reserveNumberRepository,
+            IUnitOfWork unitOfWork,
             IAppLogger<DeleteReserveNumberCommandHandler> logger)
         {
-            _mapper = mapper;
-            _reserveNumberRepository = reserveNumberRepository;
-            _logger = logger;
+            this._mapper = mapper;
+            this._unitOfWork = unitOfWork;
+            this._logger = logger;
         }
         public async Task<Unit> Handle(DeleteReserveNumberCommand request, CancellationToken cancellationToken)
         {
             //Validate
-            var reserveNumberToDelete = await _reserveNumberRepository.GetByIdAsync(request.Id);
+            var reserveNumberToDelete = await _unitOfWork.Reserves.GetByIdAsync(request.Id);
 
             //verify
             if (reserveNumberToDelete == null)
@@ -38,7 +38,7 @@ namespace Platenumbers.Application.Features.ReserveNumber.Commands.DeleteReserve
             }
 
             //delete from db
-            await _reserveNumberRepository.DeleteAsync(reserveNumberToDelete);
+            await _unitOfWork.Reserves.DeleteAsync(reserveNumberToDelete);
 
             //return 
             return Unit.Value;

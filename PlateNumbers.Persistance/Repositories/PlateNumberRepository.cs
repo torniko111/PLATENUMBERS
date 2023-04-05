@@ -25,7 +25,7 @@ namespace PlateNumbers.Persistance.Repositories
 
         public override async Task DeleteAsync(PlateNumber entity)
         {
-            var toDelete =  _context.plateNumbers.FirstOrDefault(q => q.Number == entity.Number);
+            var toDelete = _context.plateNumbers.FirstOrDefault(q => q.Number == entity.Number);
 
             if (toDelete == null)
                 throw new Exception("ასეთი ნომერი არ არსებობს");
@@ -62,14 +62,22 @@ namespace PlateNumbers.Persistance.Repositories
 
         public async Task<IReadOnlyList<PlateNumber>> PaginationOrdering(int Count, int NumberOfpage)
         {
+            int NumberPerpage = 0;
+            int Page = 0;
 
-            if (Count != null && NumberOfpage !=null)
+            if (Count != null && NumberOfpage != null)
             {
-                int NumberPerpage = 0;
-                int Page = 0;
-             
+                NumberPerpage = Count;
+                Page = NumberOfpage;
 
-                return await _context.Set<PlateNumber>().Skip(Count* NumberOfpage).Take(Count).ToListAsync();
+                int skip = Count * NumberOfpage;
+               if (NumberOfpage == 1)
+                {
+                    skip = 0;
+                }
+
+
+                return await _context.Set<PlateNumber>().Skip(skip).Take(Count).ToListAsync();
             }
 
             return await _context.Set<PlateNumber>().ToListAsync();

@@ -17,16 +17,16 @@ namespace Platenumbers.Application.Features.ReserveNumber.Commands.CreateReserve
 
     {
         private readonly IMapper _mapper;
-        private readonly IReserveNumberRepository _reserveNumberRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IAppLogger<CreateReserveNumberCommandHandler> _logger;
 
         public CreateReserveNumberCommandHandler(IMapper mapper,
-            IReserveNumberRepository reserveNumberRepository,
+            IUnitOfWork unitOfWork,
             IAppLogger<CreateReserveNumberCommandHandler> logger)
         {
-            _mapper = mapper;
-            _reserveNumberRepository = reserveNumberRepository;
-            _logger = logger;
+            this._mapper = mapper;
+            this._unitOfWork = unitOfWork;
+            this._logger = logger;
         }
         public async Task<int> Handle(CreateReserveNumberCommand request, CancellationToken cancellationToken)
         {
@@ -36,7 +36,7 @@ namespace Platenumbers.Application.Features.ReserveNumber.Commands.CreateReserve
             //convert to domain entity object
 
             // add to database
-            var reservNumberID = await _reserveNumberRepository.CreateAsync(request.Numbers.ToList());
+            var reservNumberID = await _unitOfWork.Reserves.CreateAsync(request.Numbers.ToList());
 
             //return record id
             return reservNumberID;

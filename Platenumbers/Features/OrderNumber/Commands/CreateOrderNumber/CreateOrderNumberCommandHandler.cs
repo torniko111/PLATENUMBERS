@@ -15,15 +15,15 @@ namespace Platenumbers.Application.Features.PlateNumber.Commands.CreateOrderNumb
     internal class CreateOrderNumberCommandHandler : IRequestHandler<CreateOrderNumberCommand, int>
     {
         private readonly IMapper _mapper;
-        private readonly IOrderNumberRepository _orderNumberRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IAppLogger<CreateOrderNumberCommandHandler> _logger;
 
         public CreateOrderNumberCommandHandler(IMapper mapper,
-            IOrderNumberRepository orderNumberRepository,
+            IUnitOfWork unitOfWork,
             IAppLogger<CreateOrderNumberCommandHandler> logger)
         {
             this._mapper = mapper;
-            this._orderNumberRepository = orderNumberRepository;
+            this._unitOfWork = unitOfWork;
             this._logger = logger;
         }
         public async Task<int> Handle(CreateOrderNumberCommand request, CancellationToken cancellationToken)
@@ -34,7 +34,7 @@ namespace Platenumbers.Application.Features.PlateNumber.Commands.CreateOrderNumb
             //convert to domain entity object
 
             // add to database
-            var reservNumberID = await _orderNumberRepository.CreateAsync(request.Numbers.ToList());
+            var reservNumberID = await _unitOfWork.Orders.CreateAsync(request.Numbers.ToList());
 
             //return record id
             return reservNumberID;

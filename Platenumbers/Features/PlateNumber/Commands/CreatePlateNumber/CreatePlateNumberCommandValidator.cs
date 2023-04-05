@@ -11,9 +11,9 @@ namespace Platenumbers.Application.Features.PlateNumber.Commands.CreatePlateNumb
 {
     public class CreatePlateNumberCommandValidator : AbstractValidator<CreatePlateNumberCommand>
     {
-        private readonly IPlateNumberRepository _plateNumberRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreatePlateNumberCommandValidator(IPlateNumberRepository plateNumberRepository)
+        public CreatePlateNumberCommandValidator(IUnitOfWork unitOfWork)
         {
             //RuleFor(p => p.Id)
             //    .NotNull()
@@ -29,18 +29,18 @@ namespace Platenumbers.Application.Features.PlateNumber.Commands.CreatePlateNumb
                 .WithMessage("ასეთი სახელმწიფო ნომერი მანქანისთვის უკვე არსებობს");
 
 
-            this._plateNumberRepository = plateNumberRepository;
+            this._unitOfWork = unitOfWork;
         }
 
         private async Task<bool> PlateNumberMustExist(int id, CancellationToken token)
         {
-            var plateNumber = await _plateNumberRepository.GetByIdAsync(id);
+            var plateNumber = await _unitOfWork.Numbers.GetByIdAsync(id);
             return plateNumber != null;
         }
 
         private Task<bool> PlateNumberUnique(CreatePlateNumberCommand command, CancellationToken token)
         {
-            return _plateNumberRepository.IsPlateNumberUnique(command.Number);
+            return _unitOfWork.Numbers.IsPlateNumberUnique(command.Number);
         }
     }
 }

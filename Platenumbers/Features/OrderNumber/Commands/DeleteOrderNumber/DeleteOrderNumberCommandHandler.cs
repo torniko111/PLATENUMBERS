@@ -16,21 +16,21 @@ namespace Platenumbers.Application.Features.OrderNumber.Commands.DeleteOrderNumb
 
     {
         private readonly IMapper _mapper;
-        private readonly IOrderNumberRepository _orderNumberRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IAppLogger<DeleteOrderNumberCommandHandler> _logger;
 
         public DeleteOrderNumberCommandHandler(IMapper mapper,
-            IOrderNumberRepository orderNumberRepository,
+            IUnitOfWork unitOfWork,
             IAppLogger<DeleteOrderNumberCommandHandler> logger)
         {
             this._mapper = mapper;
-            this._orderNumberRepository = orderNumberRepository;
+            this._unitOfWork = unitOfWork;
             this._logger = logger;
         }
         public async Task<Unit> Handle(DeleteReserveNumberCommand request, CancellationToken cancellationToken)
         {
             //Validate
-            var reserveNumberToDelete = await _orderNumberRepository.GetByIdAsync(request.Id);
+            var reserveNumberToDelete = await _unitOfWork.Orders.GetByIdAsync(request.Id);
 
             //verify
             if (reserveNumberToDelete == null)
@@ -39,7 +39,7 @@ namespace Platenumbers.Application.Features.OrderNumber.Commands.DeleteOrderNumb
             }
 
             //delete from db
-            await _orderNumberRepository.DeleteAsync(reserveNumberToDelete);
+            await _unitOfWork.Orders.DeleteAsync(reserveNumberToDelete);
 
             //return 
             return Unit.Value;

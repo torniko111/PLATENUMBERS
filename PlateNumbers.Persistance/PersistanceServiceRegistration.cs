@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Platenumbers.Application.Contracts.Persistance;
 using Platenumbers.Persistance.Repositories;
+using Platenumbers.Persistance.UoW;
 using PlateNumbers.Persistance.Repositories;
 using PlateNumbers.Persistence.DatabaseContext;
 using PlateNumbers.Persistence.Repositories;
@@ -28,6 +29,8 @@ namespace PlateNumbers.Persistence
             services.AddScoped<IPlateNumberRepository, PlateNumberRepository>();
             services.AddScoped<IReserveNumberRepository, ReserveNumberRepository>();
             services.AddScoped<IOrderNumberRepository, OrderNumberRepository>();
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             return services;
         }
