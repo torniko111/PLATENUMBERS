@@ -1,0 +1,55 @@
+using Microsoft.Extensions.DependencyInjection;
+using Platenumbers.API.Middleware;
+using Platenumbers.API.Middleware.Localization;
+using Platenumbers.Application;
+using Platenumbers.Infrastructure;
+using PlateNumbers.Persistance;
+using PlateNumbers.Persistence;
+using Serilog;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Host.UseSerilog((context, loggerConfig) => loggerConfig
+.WriteTo.Console()
+.ReadFrom.Configuration(context.Configuration));
+
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddReqLoc(builder.Configuration);
+
+
+builder.Services.AddControllers();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("All", builder => builder
+    .AllowAnyOrigin()
+    .AllowAnyHeader()
+    .AllowAnyMethod());
+});
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+app.UseSerilogRequestLogging();
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
