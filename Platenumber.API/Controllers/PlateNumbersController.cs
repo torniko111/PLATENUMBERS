@@ -31,9 +31,9 @@ namespace Platenumbers.API.Controllers
 
         // GET: api/<PlateNumbersController>6
         [HttpGet("{Pages}, {NumberOfpage}")]
-        public async Task<List<PlateNumbersPaginationOrderingDto>> Get(int Pages, int NumberOfpage)
+        public async Task<List<PlateNumbersPaginationOrderingDto>> Get(int Pages, int NumberOfpage, string? OrderBy = "Id")
         {
-            var plateNumbers = await _mediator.Send(new GetPlateNumbersPaginationOrderingQuery(Pages, NumberOfpage));
+            var plateNumbers = await _mediator.Send(new GetPlateNumbersPaginationOrderingQuery(Pages, NumberOfpage, OrderBy));
             return plateNumbers;
         }
 

@@ -15,5 +15,7 @@ namespace Platenumbers.Application.Features.PlateNumber.Queries.PlateNumbersPagi
         public int NumbersPerPage { get; set; }
         [JsonIgnore]
         public int PageOfNumber { get; set; }
+        [JsonIgnore]
+        public string? OrderBy { get; set; } = "Id";
     }
 }

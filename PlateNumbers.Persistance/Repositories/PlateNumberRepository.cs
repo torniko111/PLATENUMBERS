@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Platenumbers.Application.Contracts.Persistance;
+using Platenumbers.Application.Features.PlateNumber.Queries.PlateNumbersPaginationOrdering;
 using Platenumbers.Domain;
 using PlateNumbers.Persistence.DatabaseContext;
 using PlateNumbers.Persistence.Repositories;
@@ -60,7 +61,7 @@ namespace PlateNumbers.Persistance.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IReadOnlyList<PlateNumber>> PaginationOrdering(int Count, int NumberOfpage)
+        public async Task<IReadOnlyList<PlateNumber>> PaginationOrdering(int Count, int NumberOfpage, string OrderBy = "Id")
         {
             int NumberPerpage = 0;
             int Page = 0;
@@ -77,7 +78,7 @@ namespace PlateNumbers.Persistance.Repositories
                 }
 
 
-                return await _context.Set<PlateNumber>().Skip(skip).Take(Count).ToListAsync();
+                return await _context.Set<PlateNumber>().Skip(skip).Take(Count).OrderBy(e=> EF.Property <PlateNumber>(e, OrderBy)).ToListAsync();
             }
 
             return await _context.Set<PlateNumber>().ToListAsync();

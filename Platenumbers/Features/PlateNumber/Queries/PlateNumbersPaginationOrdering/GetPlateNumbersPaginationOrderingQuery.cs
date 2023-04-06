@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace Platenumbers.Application.Features.PlateNumber.Queries.PlateNumbersPaginationOrdering
 {
-    public record GetPlateNumbersPaginationOrderingQuery(int numberPerPage, int PageNumberOf) : IRequest<List<PlateNumbersPaginationOrderingDto>>;
+    public record GetPlateNumbersPaginationOrderingQuery(int numberPerPage, int PageNumberOf, string? OrderBy) : IRequest<List<PlateNumbersPaginationOrderingDto>>;
 }

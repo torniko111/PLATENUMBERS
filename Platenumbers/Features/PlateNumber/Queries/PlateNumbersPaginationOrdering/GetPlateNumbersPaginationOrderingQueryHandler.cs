@@ -26,7 +26,7 @@ namespace Platenumbers.Application.Features.PlateNumber.Queries.PlateNumbersPagi
         {
 
             // Query the database
-            var PlateNumber = await _unitOfWork.Numbers.PaginationOrdering(request.numberPerPage, request.PageNumberOf) ;
+            var PlateNumber = await _unitOfWork.Numbers.PaginationOrdering(request.numberPerPage, request.PageNumberOf, request.OrderBy);
 
             //verify
             if (PlateNumber == null)
