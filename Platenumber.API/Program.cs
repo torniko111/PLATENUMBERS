@@ -1,4 +1,6 @@
+using Microsoft.Extensions.DependencyInjection;
 using Platenumbers.API.Middleware;
+using Platenumbers.API.Middleware.Localization;
 using Platenumbers.Application;
 using Platenumbers.Infrastructure;
 using PlateNumbers.Persistance;
@@ -16,6 +18,7 @@ builder.Host.UseSerilog((context, loggerConfig) => loggerConfig
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddReqLoc(builder.Configuration);
 
 
 builder.Services.AddControllers();

@@ -18,12 +18,12 @@ namespace Platenumbers.Application.Features.PlateNumber.Commands.CreatePlateNumb
             //RuleFor(p => p.Id)
             //    .NotNull()
             //    .MustAsync(PlateNumberMustExist);
-            
+
             RuleFor(p => p.Number)
-                .NotEmpty().WithMessage("ნომერი არ შეიძლება იყოს ცარიელი")
-                .NotNull()
-                .Length(7).WithMessage("ნომერი უნდა იყოს 7 სიმბოლოიანი");
-                
+                .Length(7)
+                .Matches(@"^[A-Z]{2}\d{3}[A-Z]{2}$")
+                .WithMessage("ფორმატი შემდეგნაირი უნდა იყოს AA356DD.");
+
             RuleFor(p => p)
                 .MustAsync(PlateNumberUnique)
                 .WithMessage("ასეთი სახელმწიფო ნომერი მანქანისთვის უკვე არსებობს");
