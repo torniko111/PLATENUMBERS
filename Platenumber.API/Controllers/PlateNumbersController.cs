@@ -23,6 +23,9 @@ namespace Platenumbers.API.Controllers
 
         // GET: api/<PlateNumbersController>
         [HttpGet]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<List<PlateNumberDto>> Get()
         {
             var plateNumbers = await _mediator.Send(new GetPlateNumbersQuery());
@@ -47,6 +50,9 @@ namespace Platenumbers.API.Controllers
 
         // POST api/<PlateNumbersController>
         [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Post(CreatePlateNumberCommand plateNumber)
         {
             var response = await _mediator.Send(plateNumber);
@@ -55,6 +61,10 @@ namespace Platenumbers.API.Controllers
 
         // PUT api/<PlateNumbersController>/5
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult> Put(UpdatePlateNumberCommand plateNumber)
         {
             await _mediator.Send(plateNumber);
@@ -63,6 +73,9 @@ namespace Platenumbers.API.Controllers
 
         // DELETE api/<PlateNumbersController>/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult> Delete(int id)
         {
             var command = new DeletePlateNumberCommand { Id = id };
