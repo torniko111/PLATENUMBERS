@@ -1,8 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Platenumbers.Application.Features.PlateNumber.Commands.CreateOrderNumber;
-using Platenumbers.Application.Features.ReserveNumber.Commands.CreateReserveNumber;
-using Platenumbers.Application.Features.PlateNumber.Commands.DeletePlateNumber;
 using Platenumbers.Application.Features.OrderNumber.Commands.DeleteOrderNumber;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

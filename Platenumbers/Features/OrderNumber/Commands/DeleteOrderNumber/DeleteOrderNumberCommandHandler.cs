@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Platenumbers.Application.Features.OrderNumber.Commands.DeleteOrderNumber
 {
-    public class DeleteOrderNumberCommandHandler : IRequestHandler<DeleteReserveNumberCommand, Unit>
+    public class DeleteOrderNumberCommandHandler : IRequestHandler<DeleteOrderNumberCommand, Unit>
 
     {
         private readonly IMapper _mapper;
@@ -27,7 +27,7 @@ namespace Platenumbers.Application.Features.OrderNumber.Commands.DeleteOrderNumb
             this._unitOfWork = unitOfWork;
             this._logger = logger;
         }
-        public async Task<Unit> Handle(DeleteReserveNumberCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteOrderNumberCommand request, CancellationToken cancellationToken)
         {
             //Validate
             var reserveNumberToDelete = await _unitOfWork.Orders.GetByIdAsync(request.Id);

@@ -14,8 +14,8 @@ namespace Platenumbers.API.Middleware
 
         public async Task InvokeAsync(HttpContext httpContext)
         {
-            try
-            {
+            try { 
+            
                 await _next(httpContext);
             }
             catch (Exception ex)

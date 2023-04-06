@@ -21,7 +21,7 @@ namespace PlateNumbers.Persistance.Repositories
 
         public async Task<bool> IsPlateNumberUnique(string number)
         {
-            return await _context.plateNumbers.AnyAsync(q => q.Number == number) == false;
+            return await _context.plateNumbers.AsNoTracking().AnyAsync(q => q.Number == number) == false;
         }
 
         public override async Task DeleteAsync(PlateNumber entity)
