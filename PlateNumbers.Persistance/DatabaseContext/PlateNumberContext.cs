@@ -30,13 +30,11 @@ namespace PlateNumbers.Persistence.DatabaseContext
              .IsRequired();
 
             modelBuilder.Entity<ReserveNumber>()
-              .Property(b => b.PlateNumbers)
-              .HasMaxLength(50)
+              .Property(b => b.ExpireDate)
               .IsRequired();
 
             modelBuilder.Entity<OrderNumber>()
-              .Property(b => b.PlateNumbers)
-              .HasMaxLength(50)
+              .Property(b => b.ExpireDate)
               .IsRequired();
 
             base.OnModelCreating(modelBuilder);
