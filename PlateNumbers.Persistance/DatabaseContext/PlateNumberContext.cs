@@ -4,6 +4,7 @@ using Platenumbers.Domain.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace PlateNumbers.Persistence.DatabaseContext
     {
         public PlateNumberContext(DbContextOptions<PlateNumberContext> options) : base(options)
         {
-            
+
         }
 
         public DbSet<PlateNumber> plateNumbers { get; set; }
@@ -23,6 +24,20 @@ namespace PlateNumbers.Persistence.DatabaseContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PlateNumberContext).Assembly);
+
+            modelBuilder.Entity<PlateNumber>()
+             .Property(b => b.Number)
+             .IsRequired();
+
+            modelBuilder.Entity<ReserveNumber>()
+              .Property(b => b.PlateNumbers)
+              .HasMaxLength(50)
+              .IsRequired();
+
+            modelBuilder.Entity<OrderNumber>()
+              .Property(b => b.PlateNumbers)
+              .HasMaxLength(50)
+              .IsRequired();
 
             base.OnModelCreating(modelBuilder);
         }
@@ -34,12 +49,12 @@ namespace PlateNumbers.Persistence.DatabaseContext
             {
                 entry.Entity.DateCreated = DateTime.Now;
 
-                if(entry.State == EntityState.Added)
+                if (entry.State == EntityState.Added)
                 {
                     entry.Entity.DateCreated = DateTime.Now;
                 }
             }
-                          
+
             return base.SaveChangesAsync(cancellationToken);
         }
     }
